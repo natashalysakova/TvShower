@@ -1,0 +1,71 @@
+﻿<Window x:Class="TVShower.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TVShower"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="150"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Folder"></TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding FolderPath}"></TextBox>
+        <Button Grid.Row="0" Grid.Column="4" x:Name="BrowseButton" Content="Browse" Click="BrowseButton_Click"></Button>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Folder Type"></TextBlock>
+        <RadioButton Grid.Row="2" Grid.Column="0" Content="Full Show" GroupName="FolderTypeGroup" IsChecked="{Binding IsFullShow}"></RadioButton>
+        <RadioButton Grid.Row="2" Grid.Column="1" Content="Single Season" GroupName="FolderTypeGroup" IsChecked="{Binding IsSingleSeason}"></RadioButton>
+
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Tv Show title"></TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ShowTitle}"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="Tv Show ID"></TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding ShowId}"></TextBox>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Content="Search" Name="SearchButton" Click="SearchButton_Click"></Button>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Seasons"></TextBlock>
+        <RadioButton Grid.Row="6" Grid.Column="0" Content="Automaically" GroupName="SeasonsGroup"></RadioButton>
+        <RadioButton Grid.Row="6" Grid.Column="1" Content="Manualy" GroupName="SeasonsGroup"></RadioButton>
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Season number"></TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Season}"></TextBox>
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Filename pattern"></TextBlock>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Pattern}"></TextBox>
+
+        <!--<TreeView Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding PreviewTreeView}"></TreeView>-->
+        <ListBox Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding PreviewFilenames}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="5" Content="Preview" Name="PreviewButton" Click="PreviewButton_Click"></Button>
+        <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="5" Content="Rename" Name="RenameButton" Click="RenameButton_Click"></Button>
+
+    </Grid>
+</Window>
