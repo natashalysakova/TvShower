@@ -48,6 +48,7 @@
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Seasons"></TextBlock>
         <RadioButton Grid.Row="6" Grid.Column="0" Content="Automaically" GroupName="SeasonsGroup"></RadioButton>
         <RadioButton Grid.Row="6" Grid.Column="1" Content="Manualy" GroupName="SeasonsGroup"></RadioButton>
+        <CheckBox Grid.Row="6" Grid.Column="3" Content="Add Show Title" IsChecked="{Binding AddShowTitle}"></CheckBox>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Season number"></TextBlock>
         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Season}"></TextBox>

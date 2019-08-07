@@ -76,8 +76,12 @@ namespace TVShower
             set { _isFullShow = !value; NotifyPropertyChanged(nameof(IsSingleSeason)); }
         }
 
-
-
+        private bool _addShowTitle;
+        public bool AddShowTitle
+        {
+            get { return _addShowTitle; }
+            set { _addShowTitle = value; NotifyPropertyChanged(nameof(AddShowTitle)); }
+        }
 
         public MainWindow()
         {
@@ -143,14 +147,17 @@ namespace TVShower
             {
                 IsFullShow = true;
                 ShowTitle = info.Name;
-                PreviewFilenames.Add(info.Name);
+                AddShowTitle = false;
 
+                PreviewFilenames.Add(info.Name);
                 RenameFullShow(subdirectories);
 
             }
             else
             {
                 IsSingleSeason = true;
+                AddShowTitle = true;
+
                 var splittedPath = info.FullName.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 ShowTitle = splittedPath[splittedPath.Length - 1];
 
@@ -232,7 +239,13 @@ namespace TVShower
 
         private string RenameFolder(string name, int season)
         {
-            var newFolderName = IsFullShow ?  $"Season {season.ToString("00")}" : $"{ShowTitle} - Season {season.ToString("00")}";
+            string newFolderName = $"Season {season.ToString("00")}";
+
+            if (AddShowTitle)
+            {
+                newFolderName = $"{ShowTitle} - {newFolderName}";
+            }
+
             PreviewFilenames.Add($"{name} -> {newFolderName}");
             return newFolderName;
         }
