@@ -52,6 +52,8 @@
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Season number"></TextBlock>
         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Season}"></TextBox>
+        <TextBlock Grid.Row="7" Grid.Column="2" Text="Subtitle language"></TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding SubtitleLanguage}"></TextBox>
 
         <TextBlock Grid.Row="8" Grid.Column="0" Text="Filename pattern"></TextBlock>
         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Pattern}"></TextBox>

@@ -41,11 +41,25 @@ namespace TVShower
             set { _pattern = value; NotifyPropertyChanged(nameof(Pattern)); }
         }
 
+        private string _subtitlePattern = "{title} - s{season}e{episode}.{lang}{ext}";
+        public string SubtitlePattern
+        {
+            get { return _subtitlePattern; }
+            set { _subtitlePattern = value; NotifyPropertyChanged(nameof(SubtitlePattern)); }
+        }
+
         private string _seasonNumber;
         public string Season
         {
             get { return _seasonNumber; }
             set { _seasonNumber = value; NotifyPropertyChanged(nameof(Season)); }
+        }
+
+        private string _subtitleLanguage;
+        public string SubtitleLanguage
+        {
+            get { return _subtitleLanguage; }
+            set { _subtitleLanguage = value; NotifyPropertyChanged(nameof(SubtitleLanguage)); }
         }
 
         private string _showId;
@@ -100,11 +114,14 @@ namespace TVShower
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CommonOpenFileDialog();
+            dialog.DefaultDirectory = "D:\\Downloads\\TVShows";
             dialog.IsFolderPicker = true;
             CommonFileDialogResult result = dialog.ShowDialog();
-
-            FolderPath = dialog.FileName;
-            AnalyzeFolder();
+            if(result == CommonFileDialogResult.Ok)
+            {
+                FolderPath = dialog.FileName;
+                AnalyzeFolder();
+            }
         }
 
         private void PrepareAnalysis()
@@ -205,7 +222,7 @@ namespace TVShower
             episode = 1;
             foreach (var file in subtitles)
             {
-                var newName = RenameFile(ShowTitle, file.Name, file.Extension, season, episode);
+                var newName = RenameSubtitle(ShowTitle, file.Name, file.Extension, SubtitleLanguage, season, episode);
                 RenameList.Add(file.FullName, Path.Combine(item.FullName, newName));
                 episode++;
             }
@@ -261,6 +278,18 @@ namespace TVShower
             return newFileName;
         }
 
+        private string RenameSubtitle(string name, string oldName, string extention, string language, int season, int episode)
+        {
+            var newFileName = SubtitlePattern.Replace("{title}", name)
+                .Replace("{season}", season.ToString("00"))
+                .Replace("{episode}", episode.ToString("00"))
+                .Replace("{lang}", language)
+                .Replace("{ext}", extention);
+            PreviewFilenames.Add($"{oldName} -> {newFileName}");
+
+            return newFileName;
+        }
+
         private void RenameButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (var path in RenameList)
@@ -275,6 +304,9 @@ namespace TVShower
 
             foreach (var path in RenameList)
             {
+                if (path.Key == path.Value)
+                    continue;
+
                 if (Directory.Exists(path.Key) || File.Exists(path.Key))
                 {
                     FileAttributes attr = File.GetAttributes(path.Key);
