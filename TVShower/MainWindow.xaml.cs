@@ -24,6 +24,7 @@ namespace TVShower
             get;
         }
 
+        private const string directory = @"D:\Tv Shows";
         Dictionary<string, string> RenameList = new Dictionary<string, string>();
 
 
@@ -114,7 +115,7 @@ namespace TVShower
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CommonOpenFileDialog();
-            dialog.DefaultDirectory = "D:\\Downloads\\TVShows";
+            dialog.DefaultDirectory = directory;
             dialog.IsFolderPicker = true;
             CommonFileDialogResult result = dialog.ShowDialog();
             if(result == CommonFileDialogResult.Ok)
@@ -332,13 +333,12 @@ namespace TVShower
                 int showIdInt;
                 if (int.TryParse(ShowId, out showIdInt))
                 {
-                    ShowTitle = provider.GetMovie(showIdInt);
+                    ShowTitle = provider.GetTvShow(showIdInt);
                 }
             }
             else if (!string.IsNullOrEmpty(ShowTitle))
             {
-                var ids = provider.SearchTvShow(ShowTitle);
-                ShowId = string.Join(",", ids);
+                ShowId = provider.SearchTvShow(ShowTitle).ToString();
             }
         }
 

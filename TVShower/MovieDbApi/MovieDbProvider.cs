@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TMDbLib.Client;
 using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.TvShows;
 
 namespace TVShower.MovieDbApi
 {
-    class MovieDbProvider
+    public class MovieDbProvider
     {
         TMDbClient _client;
 
@@ -17,19 +19,23 @@ namespace TVShower.MovieDbApi
             _client = new TMDbClient(Properties.Resources.apiKey);
         }
 
-        public string GetMovie(int id)
+        public string GetTvShow(int id)
         {
-            Movie movie = _client.GetMovieAsync(id).Result;
-            return movie.Title;
+            TvShow show = _client.GetTvShowAsync(id).Result;
+            return show.Name;
         }
 
-        public IEnumerable<int> SearchTvShow(string name)
+        public int SearchTvShow(string name)
         {
             var searchResult = _client.SearchTvShowAsync(name).Result;
             foreach (var item in searchResult.Results)
             {
-                yield return item.Id;
+                if (item.Name == name)
+                {
+                    return item.Id;
+                }
             }
+            return -1;
         }
 
     }
