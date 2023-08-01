@@ -121,6 +121,7 @@ namespace TVShower
             if(result == CommonFileDialogResult.Ok)
             {
                 FolderPath = dialog.FileName;
+
                 AnalyzeFolder();
             }
         }

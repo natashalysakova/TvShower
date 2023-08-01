@@ -30,9 +30,14 @@ namespace TVShower.MovieDbApi
             var searchResult = _client.SearchTvShowAsync(name).Result;
             foreach (var item in searchResult.Results)
             {
-                if (item.Name == name)
+                var details = _client.GetTvShowTranslationsAsync(item.Id).Result;
+
+                foreach(var title in details.Translations)
                 {
-                    return item.Id;
+                    if (title.Data.Name == name)
+                    {
+                        return item.Id;
+                    }
                 }
             }
             return -1;
